@@ -22,6 +22,7 @@ type Auth {
 }
 
 input Book {
+    _id:ID!
     authors: String!
     description: String!
     bookId: String!
@@ -30,7 +31,7 @@ input Book {
 }
 
 input User{
-    _id: ID
+    _id: ID!
     username:String!
     email: String
     password: String
