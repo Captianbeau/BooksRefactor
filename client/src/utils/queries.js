@@ -5,7 +5,14 @@ query singleUser($userId: ID!){
     user(userId: $userId){
         _id
         username
-        savedBooks
+        savedBooks{
+            _id
+            authors
+            description
+            bookId
+            link
+            title
+        }
     }
 }
 `;

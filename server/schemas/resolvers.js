@@ -6,7 +6,7 @@ const resolvers = {
         singleUser: async (parent, { userId, username }) => {
             return User.findOne({
                 $or: [{ _id: userId }, { username: username }],
-            });
+            }).populate('savedBooks');
         }
     },
     Mutation: {
