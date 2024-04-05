@@ -12,9 +12,10 @@ const resolvers = {
     Mutation: {
         //create user and login
         createUser: async (parent, { username, email, password }) => {
+            console.log(user);
             const user = User.create({ username, email, password });
             const token = signToken(user);
-
+            
             return { token, user };
 
         },
