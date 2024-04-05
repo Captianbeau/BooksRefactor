@@ -3,10 +3,9 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
     Query: {
         //get single user
-        getSingleUser: async (parent, { user }) => {
-            let user = null, params;
+        singleUser: async (parent, { userId, username }) => {
             return User.findOne({
-                $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
+                $or: [{ _id: userId }, { username: username }],
             });
         }
     },
@@ -20,30 +19,30 @@ const resolvers = {
 
         },
         //save a book through user
-        saveBook: async (parent, { user, book }) => {
+        saveBook: async (parent, { userId, book }) => {
             return User.findOneAndUpdate(
-                { _id: user._id },
+                { _id: userId },
                 { $addToSet: { savedBooks: book } },
                 { new: true, runValidators: true }
             );
         },
         //delete a book through user
-        deleteBook: async (parent, { user, params }) => {
+        deleteBook: async (parent, { userId, params }) => {
             User.findOneAndUpdate(
-                { _id: user._id },
+                { _id: userId },
                 { $pull: { savedBooks: { bookId: params.bookId } } },
                 { new: true }
             );
         },
 
         // login with a token
-        login: async (parent, { body }) => {
-            const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+        login: async (parent, {username, email, password }) => {
+            const user = await User.findOne({ $or: [{ username: username }, { email: email }] });
             if (!user) {
                 throw AuthenticationError
             }
 
-            const correctPw = await user.isCorrectPassword(body.password);
+            const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
                 throw AuthenticationError
