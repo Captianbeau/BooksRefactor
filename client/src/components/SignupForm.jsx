@@ -33,12 +33,14 @@ const SignupForm = () => {
 
     try {
       const response = await createUser({
-        variables:{
-          username:userFormData.username,
-        email:userFormData.email,
-      password:userFormData.password},
+        variables: {
+          username: userFormData.username,
+          email: userFormData.email,
+          password: userFormData.password
+        },
       });
-      const token = response.data.createUser.token
+      const token = response.data.createUser.token;
+      console.log(response)
       if (!response) {
         throw new Error('something went wrong!');
       }
@@ -63,11 +65,11 @@ const SignupForm = () => {
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
-        
-          <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-            Something went wrong with your signup!
-          </Alert>
-        
+
+        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+          Something went wrong with your signup!
+        </Alert>
+
         <Form.Group className='mb-3'>
           <Form.Label htmlFor='username'>Username</Form.Label>
           <Form.Control

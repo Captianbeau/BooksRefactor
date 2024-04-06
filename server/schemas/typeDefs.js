@@ -17,7 +17,7 @@ type Books {
 }
 
 type Auth {
-    token: ID!
+    token: ID
     user: Users
 }
 
@@ -33,8 +33,8 @@ input Book {
 input User{
     _id: ID!
     username:String!
-    email: String
-    password: String
+    email: String!
+    password: String!
     savedBooks: Book
 }
 type Query{
