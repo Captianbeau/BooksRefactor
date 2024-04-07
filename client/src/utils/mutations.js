@@ -19,8 +19,8 @@ mutation createUser(
 }
 `;
 export const ADD_BOOK = gql`
-mutation saveBook($userId: ID!, $book: [ID]!){
-    saveBook(userId: $userId, book: $book){
+mutation saveBook($userId: ID!, $book: [Book!]!, ){
+    saveBook(userId: $userId, book: $book, ){
         _id
         savedBooks{
             _id
