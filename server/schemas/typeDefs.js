@@ -23,7 +23,7 @@ type Auth {
 
 input Book {
     _id:ID
-    authors: String
+    authors: [String]
     description: String!
     bookId: String!
     image: String
@@ -44,7 +44,7 @@ singleUser(userId:ID!, username: String!): Users
 
 type Mutation{
 createUser(username:String!, email:String!, password: String!): Auth
-saveBook(userId: ID! , book: [Book!]!): Users
+saveBook(userId: ID! , book: [Book]!): Users
 deleteBook(userId: ID!, book: Book): Users
 login(username: String!, email: String!, password: String!): Auth
 }

@@ -50,12 +50,12 @@ const SearchBooks = () => {
 
       const bookData = items.map((book) => ({
         bookId: book.id,
-        authors: book.volumeInfo.authors || ['No author to display'],
+        authors: book.volumeInfo.authors || 'No author to display',
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
       }));
-
+      console.log(bookData)
       setSearchedBooks(bookData);
       setSearchInput('');
     } catch (err) {
@@ -70,15 +70,17 @@ const SearchBooks = () => {
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
 
     if (!token) {
       return false;
     }
-
+    const user = Auth.getProfile(token)
+    
     try {
       const response = await saveBook({
         variables: {
-          userId: token,
+          userId: user.data._id,
           book: bookToSave,
         },
       });
