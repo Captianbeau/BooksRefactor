@@ -4,12 +4,12 @@ type Users {
     username: String
     email: String
     password: String
-    savedBooks: Books
+    savedBooks: [Books]
 }
 
 type Books {
-    _id: ID
-    authors: String
+    _id: ID!
+    authors: [String]
     description: String
     bookId: String
     link: String
@@ -39,7 +39,7 @@ input User{
     savedBooks: Book
 }
 type Query{
-user(userId:ID!, username: String): Users
+user(userId:ID!): Users
 }
 
 type Mutation{
