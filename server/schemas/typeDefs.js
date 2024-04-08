@@ -33,20 +33,20 @@ input Book {
 
 input User{
     _id: ID!
-    username:String
-    email: String
+    username:String!
+    email: String!
     password: String!
     savedBooks: Book
 }
 type Query{
-singleUser(userId:ID!, username: String!): Users
+singleUser(userId:ID!, username: String): Users
 }
 
 type Mutation{
 createUser(username:String!, email:String!, password: String!): Auth
 saveBook(userId: ID! , book: [Book]!): Users
 deleteBook(userId: ID!, book: Book): Users
-login(username: String!, email: String!, password: String!): Auth
+login(username: String, email: String, password: String!): Auth
 }
 `
 

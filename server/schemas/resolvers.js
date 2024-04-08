@@ -28,7 +28,7 @@ const resolvers = {
         },
         //delete a book through user
         deleteBook: async (parent, { userId, params }) => {
-            User.findOneAndUpdate(
+           return User.findOneAndUpdate(
                 { _id: userId },
                 { $pull: { savedBooks: { bookId: params.bookId } } },
                 { new: true }
