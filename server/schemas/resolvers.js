@@ -3,7 +3,7 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
     Query: {
         //get single user
-        singleUser: async (parent, { userId, username }) => {
+        user: async (parent, { userId, username }) => {
             return User.findOne({
                 $or: [{ _id: userId }, { username: username }],
             }).populate('savedBooks');
