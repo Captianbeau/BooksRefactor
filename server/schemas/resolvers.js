@@ -30,10 +30,10 @@ const resolvers = {
             );
         },
         //delete a book through user
-        deleteBook: async (parent, { userId, params }) => {
+        deleteBook: async (parent, { userId, book }) => {
            return User.findOneAndUpdate(
                 { _id: userId },
-                { $pull: { savedBooks: { bookId: params.bookId } } },
+                { $pull: { savedBooks: { bookId: book } } },
                 { new: true }
             );
         },

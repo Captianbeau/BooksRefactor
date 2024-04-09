@@ -45,7 +45,7 @@ user(userId:ID!): Users
 type Mutation{
 createUser(username:String!, email:String!, password: String!): Auth
 saveBook(userId: ID! , book: [Book]!): Users
-deleteBook(userId: ID!, book: Book): Users
+deleteBook(userId: ID!, book: ID!): Users
 login(username: String, email: String!, password: String!): Auth
 }
 `
