@@ -44,8 +44,8 @@ user(userId:ID!): Users
 
 type Mutation{
 createUser(username:String!, email:String!, password: String!): Auth
-saveBook(userId: ID! , book: [Book]!): Users
-deleteBook(userId: ID!, book: ID!): Users
+saveBook(userId: String! , book: [Book]!): Users
+deleteBook(userId: String!, book: String!): Users
 login(username: String, email: String!, password: String!): Auth
 }
 `
