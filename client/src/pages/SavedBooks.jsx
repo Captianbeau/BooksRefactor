@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Container,
   Card,
@@ -6,7 +6,7 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-import{useQuery, useMutation} from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_USER } from '../utils/queries';
 import { DELETE_BOOK } from '../utils/mutations';
 // import { getMe, deleteBook } from '../utils/API';
@@ -19,53 +19,35 @@ const SavedBooks = () => {
   const [deleteBook] = useMutation(DELETE_BOOK);
 
 
-  // use this to determine if `useEffect()` hook needs to run again
-  // const userDataLength = Object.keys(userData).length;
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  // useEffect(() => {
-  //   const getUserData = async () => {
-      // try {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
-        
-        if (!token) {
-          return false;
-        }
+  if (!token) {
+    return false;
+  }
+  //get user id
+  const me = Auth.getProfile(token);
 
-        const me = Auth.getProfile(token);
+  // const response = await getMe(token);
+  if (!me) {
+    return console.log('cant')
+  }
+  //gets saved books
+  const { loading, data } = useQuery(QUERY_SINGLE_USER, {
+    variables: { userId: me.data._id }
+  });
 
-        // const response = await getMe(token);
-        if(!me){
-          return console.log('cant')
-        }
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
 
-        const {loading,data} = useQuery(QUERY_SINGLE_USER,{
-          variables:{ userId: me.data._id  }
-        });
+  if (!data) {
+    // throw new Error('something went wrong!');
+    return console.log('noData')
+  }
 
-        if (loading) {
-          return <h2>LOADING...</h2>;
-        }
+  const user = data.user;
 
-        if (!data) {
-          // throw new Error('something went wrong!');
-         return console.log('noData')
-        }
 
-        const user = data.user;
-
-        
-
-        // console.log(user)
-
-  // setUserData(user);
-
-      // } catch (err) {
-      //   console.error(err);
-      // }
-  //   };
-
-  //   getUserData();
-  // }, [userDataLength]);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -114,7 +96,7 @@ const SavedBooks = () => {
         <Row>
           {user.savedBooks.map((book) => {
             return (
-              <Col md="4" key = {book.bookId}>
+              <Col md="4" key={book.bookId}>
                 <Card key={book.bookId} border='dark'>
                   {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
                   <Card.Body>
@@ -128,7 +110,7 @@ const SavedBooks = () => {
                 </Card>
               </Col>
             );
-            })} 
+          })}
         </Row>
       </Container>
     </>

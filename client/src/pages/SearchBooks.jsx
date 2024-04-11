@@ -75,8 +75,9 @@ const SearchBooks = () => {
     if (!token) {
       return false;
     }
+    //get user id
     const user = Auth.getProfile(token)
-    
+    //save book
     try {
       const response = await saveBook({
         variables: {
