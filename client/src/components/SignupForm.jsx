@@ -29,7 +29,7 @@ const SignupForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    //creates and logins user
     try {
       const response = await createUser({
         variables: {
@@ -43,7 +43,7 @@ const SignupForm = () => {
       if (!response) {
         throw new Error('something went wrong!');
       }
-      // const { token, user } = await response.json();
+
       console.log(response.data.createUser.user);
       Auth.login(token);
     } catch (err) {
